@@ -6,7 +6,13 @@ Repozitorij z gradivi pri predmetu APPR v študijskem letu 2015/16.
 
 ## ANALIZA STATISTIKE LIGE NBA
 
-Ameriška košarkarska liga NBA (National Basketball Association) je najbolj priljubljena košarkarska liga na svetu. Posledično je tudi najbolj spremljana in njena statistika je najbolj obsežna. Sam sem se odločil za analizo igralcev v sezoni 2014/2015. Podatki bodo urejeni po mnogih prvinah košarke (št. doseženih točk, odstotek zadetih metov, dobljeni skoki, itd.). Podatki so dostopni v oblikah SCV, XLS, HTML.
+Ameriška košarkarska liga NBA (National Basketball Association) je najbolj priljubljena košarkarska liga na svetu. Posledično je tudi najbolj spremljana in njena statistika je najbolj obsežna. Sam sem se odločil za analizo igralcev v sezoni 2014/2015. Podatki bodo urejeni po mnogih prvinah košarke (št. doseženih točk, odstotek zadetih metov, dobljeni skoki, itd.). 
+
+Podatke bom pridobil na straneh:
+* http://www.basketball-reference.com/leagues/NBA_2015_totals.html?lid=header_seasons
+* http://espn.go.com/nba/statistics/player/_/stat/scoring-per-game/sort/avgPoints/year/2015/count/41
+
+
 
 ## Cilj:
 
