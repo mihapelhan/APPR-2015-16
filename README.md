@@ -4,10 +4,19 @@ Avtor: Miha Pelhan
 
 Repozitorij z gradivi pri predmetu APPR v študijskem letu 2015/16.
 
-## Tematika
+## ANALIZA STATISTIKE LIGE NBA
 
-Izbrali si boste temo, s katero se bo vaš projekt ukvarjal. Tukaj boste
-napisali, kje ste dobili podatke, ter kakšen je vaš cilj.
+Ameriška košarkarska liga NBA (National Basketball Association) je najbolj priljubljena košarkarska liga na svetu. Posledično je tudi najbolj spremljana in njena statistika je najbolj obsežna. Sam sem se odločil za analizo igralcev v sezoni 2014/2015. Podatki bodo urejeni po mnogih prvinah košarke (št. doseženih točk, odstotek zadetih metov, dobljeni skoki, itd.). 
+
+Podatke bom pridobil na straneh:
+* http://www.basketball-reference.com/leagues/NBA_2015_totals.html?lid=header_seasons
+* http://espn.go.com/nba/statistics/player/_/stat/scoring-per-game/sort/avgPoints/year/2015/count/41
+
+
+
+## Cilj:
+
+Cilj naloge je narediti podrobno analizo statistike, torej poiskati najboljšega igralca v vsaki izmed kategorij, ugotoviti povprečje izmed vsakih kategorij, primerjati igralce med seboj, itd.
 
 ## Program
 
