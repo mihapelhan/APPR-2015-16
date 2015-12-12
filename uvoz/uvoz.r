@@ -8,8 +8,10 @@ stran <- html_session(url) %>% read_html(encoding = "UTF-8")
 tabela <- stran %>% html_nodes(xpath ="//table[5]") %>% .[[1]] %>% html_table()
 
 podatki<-read.csv("podatki.csv", header=TRUE, sep=",", dec=".", stringsAsFactors = FALSE, na.strings = ".")
-podatki[,6:30]<-as.numeric(podatki[,6:30])
 a<-6:30
 podatki[a]<-lapply(podatki[a], as.numeric)
-data<-podatki[!is.na(podatki$PTS),]
-data$Rk<-NULL
+podatki<-podatki[!is.na(podatki$PTS),]
+podatki$Rk<-NULL
+colnames(podatki)[29]<-"PTS"
+podatki<-podatki[order(podatki[,29], decreasing = TRUE),]
+plot(podatki$PTS, typ='p', xlab="Player", ylab="Points")
