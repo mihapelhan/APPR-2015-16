@@ -12,6 +12,16 @@ a<-6:30
 podatki[a]<-lapply(podatki[a], as.numeric)
 podatki<-podatki[!is.na(podatki$PTS),]
 podatki$Rk<-NULL
+podatki$eFG.<-NULL
 colnames(podatki)[29]<-"PTS"
 podatki<-podatki[order(podatki[,29], decreasing = TRUE),]
-plot(podatki$PTS, typ='p', xlab="Player", ylab="Points")
+
+link<-'http://www.spotrac.com/widget/sport/nba/current-year/rankings-cap/"'
+site<-html_session(link) %>% read_html(encoding = "UTF-8")
+salaries<-site %>% html_nodes(xpath ="//table") %>% .[[1]] %>% html_table()
+salaries$`Â `<-NULL
+salaries$Pos.<-NULL
+
+celatabela<-inner_join(podatki, salaries, by = "Player")
+
+require(ggplot2)
