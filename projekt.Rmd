@@ -14,37 +14,31 @@ output:
 #source("fontconfig.r", encoding = "UTF-8")
 
 # Uvoz vseh potrebnih knjižnic
-source("lib/libraries.r", encoding = "UTF-8")
+#source("lib/libraries.r", encoding = "UTF-8")
 ```
 
 # Izbira teme
 
-Za vzorec bomo prikazali nekaj podatkov o slovenskih občinah.
+Za temo mojega projekta sem si izbral analizo igralcev lige NBA v sezoni 2014-15. Analiziral bom vse statistične prvine košarke, na podlagi podatkov, ki jih bom pridobil iz:
+1. http://www.basketball-reference.com/leagues/NBA_2015_totals.html?lid=header_seasons
+2. http://www.spotrac.com/widget/sport/nba/current-year/rankings-cap/
+3. https://en.wikipedia.org/wiki/2014%E2%80%9315_NBA_season
 
-***
+Kasneje bom dodal še zemljevid, na katerem bo prikazano, od kod prihajajo igralci iz lige.
+
 
 # Obdelava, uvoz in čiščenje podatkov
 
-```{r uvoz, echo=FALSE}
+```{r}
 source("uvoz/uvoz.r", encoding = "UTF-8")
 ```
 
-Uvozili smo podatke o občinah v obliki CSV s statističnega urada ter v obliki HTML
-z Wikipedije. Poglejmo si začetka obeh uvoženih razpredelnic.
+V tej fazi sem uvozil podatke v obliki CSV (iz povezave 1), ter podatke v obliki HTML (iz povezav 2 in 3). V CSV datoteki sem dobil vse statistične podatke, k sem jih potreboval, iz povezave 2 pa sem dobil še podatke o plačah igralcev in tabeli združil. Tako da so zdaj vsi podatki, ki sem jih do sedaj potreboval zbrani v eni tabeli. V tej tabeli so vsi številčni podatki v stolpcih oblike numeric, ostali so oblike character. Spremenljivk je vseh skupaj 29, vrstic pa 473, saj je igralcev v ligi zelo veliko.
+Tako izgleda del tabele:
 
-```{r razpredelnice}
-kable(head(druzine))
-head(obcine)
+```{r}
+head(celatabela)
 ```
-
-Slika \ref{fig:histogram} prikazuje porazdelitev števila naselij v občinah.
-
-```{r histogram, echo=FALSE, fig.align='center', fig.cap='Histogram števila naselij v občinah'}
-hist(obcine[,4], main = "Pogostost števila naselij",
-     xlab = "Število naselij", ylab = "Število občin")
-```
-
-***
 
 # Analiza in vizualizacija podatkov
 
