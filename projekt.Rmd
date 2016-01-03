@@ -3,18 +3,19 @@ title: "Poročilo pri predmetu Analiza podatkov s programom R"
 author: "Študent FMF"
 output:
   pdf_document:
-    latex_engine: xelatex
     includes:
       in_header: lib/styles.sty
+    latex_engine: xelatex
+  html_document: default
 ---
 
-```{r setup, echo=FALSE, results='hide', message=FALSE}
+```{r setup, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 # Če želimo nastaviti pisave v PDF-ju, odkomentiramo
 # in sledimo navodilom v programu.
 #source("fontconfig.r", encoding = "UTF-8")
 
 # Uvoz vseh potrebnih knjižnic
-#source("lib/libraries.r", encoding = "UTF-8")
+source("lib/libraries.r", encoding = "UTF-8")
 ```
 
 # Izbira teme
@@ -29,51 +30,26 @@ Kasneje bom dodal še zemljevid, na katerem bo prikazano, od kod prihajajo igral
 
 # Obdelava, uvoz in čiščenje podatkov
 
-```{r}
+```{r uvoz, echo=FALSE,results='hide',message=FALSE}
 source("uvoz/uvoz.r", encoding = "UTF-8")
 ```
 
 V tej fazi sem uvozil podatke v obliki CSV (iz povezave 1), ter podatke v obliki HTML (iz povezav 2 in 3). V CSV datoteki sem dobil vse statistične podatke, k sem jih potreboval, iz povezave 2 pa sem dobil še podatke o plačah igralcev in tabeli združil. Tako da so zdaj vsi podatki, ki sem jih do sedaj potreboval zbrani v eni tabeli. V tej tabeli so vsi številčni podatki v stolpcih oblike numeric, ostali so oblike character. Spremenljivk je vseh skupaj 29, vrstic pa 473, saj je igralcev v ligi zelo veliko.
-Tako izgleda del tabele:
 
-```{r}
-head(celatabela)
+Na spletu sem našel tabelo z igralci, ki so bili najboljši v posamezni kategoriji:
+
+```{r,echo=FALSE,message=FALSE}
+tabela
 ```
 
-# Analiza in vizualizacija podatkov
+Po podatkih iz moje tabele pa lahko predstavim naprimer nekaj igralcev, ki so dosegli največ točk:
 
-```{r vizualizacija, echo=FALSE}
-source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
+```{r,echo=FALSE,message=FALSE}
+kable(strelci)
 ```
 
-Slika \ref{fig:zemljevid} prikazuje povprečno velikost družine za vsako občino.
+Ter še nekaj igralcev, ki so bili najbolje plačani:
 
-```{r zemljevid, echo=FALSE, fig.align='center', fig.cap='Zemljevid povprečnega števila otrok v družini'}
-n <- 100
-barve <- topo.colors(n)[1+(n-1)*(druzine$povprecje-min.povprecje)/(max.povprecje-min.povprecje)]
-plot(zemljevid, col = barve)
-title("Povprečno število otrok v družini")
+```{r,echo=FALSE,message=FALSE}
+kable(place)
 ```
-
-***
-
-# Napredna analiza podatkov
-
-```{r analiza, echo=FALSE}
-source("analiza/analiza.r", encoding = "UTF-8")
-```
-
-Slika \ref{fig:graf} prikazuje povezavo med številom naselij in površino občine.
-
-```{r graf, echo=FALSE, fig.align='center', fig.cap='Povezava med številom naselij in površino občine'}
-plot(obcine[[1]], obcine[[4]],
-     main = "Število naselij glede na površino občine",
-     xlab = expression("Površina (km"^2 * ")"),
-     ylab = "Št. naselij",
-     col = barve[obcine[[7]]],
-     pch = 18)
-legend("topright", legend = names(barve), col = barve,
-       pch = 18, cex = 0.5, bg = "white")
-```
-
-***
