@@ -12,8 +12,9 @@ podatki<-read.csv("podatki.csv", header=TRUE, sep=",", dec=".", stringsAsFactors
 podatki$Rk<-NULL
 podatki$eFG.<-NULL
 a<-c(6:28)
-podatki[a]<-lapply(podatki[a], as.numeric)
+suppressWarnings(podatki[a]<-lapply(podatki[a], as.numeric))
 podatki<-podatki[!is.na(podatki$PTS),]
+#podatki<-na.omit(podatki)
 colnames(podatki)[28]<-"PTS"
 podatki<-podatki[order(podatki[,28], decreasing = TRUE),]
 

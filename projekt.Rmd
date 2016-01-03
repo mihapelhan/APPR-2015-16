@@ -5,7 +5,6 @@ output:
   pdf_document:
     includes:
       in_header: lib/styles.sty
-    latex_engine: xelatex
   html_document: default
 ---
 
@@ -31,7 +30,7 @@ Kasneje bom dodal še zemljevid, na katerem bo prikazano, od kod prihajajo igral
 # Obdelava, uvoz in čiščenje podatkov
 
 ```{r uvoz, echo=FALSE,results='hide',message=FALSE}
-source("uvoz/uvoz.r", encoding = "UTF-8")
+source("C:/Program Files/APPR-2015-16/uvoz/uvoz.r", encoding = "UTF-8")
 ```
 
 V tej fazi sem uvozil podatke v obliki CSV (iz povezave 1), ter podatke v obliki HTML (iz povezav 2 in 3). V CSV datoteki sem dobil vse statistične podatke, k sem jih potreboval, iz povezave 2 pa sem dobil še podatke o plačah igralcev in tabeli združil. Tako da so zdaj vsi podatki, ki sem jih do sedaj potreboval zbrani v eni tabeli. V tej tabeli so vsi številčni podatki v stolpcih oblike numeric, ostali so oblike character. Spremenljivk je vseh skupaj 29, vrstic pa 473, saj je igralcev v ligi zelo veliko.
@@ -39,17 +38,17 @@ V tej fazi sem uvozil podatke v obliki CSV (iz povezave 1), ter podatke v obliki
 Na spletu sem našel tabelo z igralci, ki so bili najboljši v posamezni kategoriji:
 
 ```{r,echo=FALSE,message=FALSE}
-tabela
+kable(tabela)
 ```
 
 Po podatkih iz moje tabele pa lahko predstavim naprimer nekaj igralcev, ki so dosegli največ točk:
 
 ```{r,echo=FALSE,message=FALSE}
-kable(strelci)
+kable(head(strelci))
 ```
 
 Ter še nekaj igralcev, ki so bili najbolje plačani:
 
 ```{r,echo=FALSE,message=FALSE}
-kable(place)
+kable(head(place))
 ```
