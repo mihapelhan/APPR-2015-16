@@ -1,8 +1,8 @@
 # Uvoz potrebnih knjižnic
-library(sp)
-library(maptools)
-library(digest)
-gpclibPermit()
+#library(sp)
+#library(maptools)
+#library(digest)
+#gpclibPermit()
 
 # Funkcija uvozi.zemljevid(url, ime.zemljevida, pot.zemljevida,
 #                         encoding = "Windows-1250", force = FALSE)

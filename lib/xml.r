@@ -1,7 +1,7 @@
 # Uvoz s spletne strani
 
 library(XML)
-library(httr)
+#library(httr)
 
 uvozi.obcine <- function() {
   url.obcine <- "http://sl.wikipedia.org/wiki/Seznam_ob%C4%8Din_v_Sloveniji"
