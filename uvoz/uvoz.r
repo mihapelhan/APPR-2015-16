@@ -35,3 +35,13 @@ celatabela$Salary<-as.numeric(celatabela$Salary)
 
 strelci<-data.frame(Player=celatabela$Player, Points=celatabela$Points)
 
+zlink<-'http://hoopshype.com/2015/02/24/where-are-nba-players-born/'
+zstran <- html_session(zlink) %>% read_html(encoding = "UTF-8")
+ztabela <- zstran %>% html_nodes(xpath ="//table[2]") %>% .[[1]]  %>% html_table()
+ztabela<-na.omit(ztabela)
+ztabela<-ztabela[-1,-3]
+colnames(ztabela)<-c('City','Players')
+ztabela$City<-as.factor(ztabela$City)
+ztabela$Players<-as.numeric(ztabela$Players)
+ztabela$City<-gsub('[[:digit:]]+', '', ztabela$City)
+ztabela$City<-gsub('\\.', '', ztabela$City)
