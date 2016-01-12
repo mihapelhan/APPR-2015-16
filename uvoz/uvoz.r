@@ -45,3 +45,27 @@ ztabela$City<-as.factor(ztabela$City)
 ztabela$Players<-as.numeric(ztabela$Players)
 ztabela$City<-gsub('[[:digit:]]+', '', ztabela$City)
 ztabela$City<-gsub('\\.', '', ztabela$City)
+ztabela<-ztabela[-11,]
+ztabela1<-ztabela
+ztabela$Lat<-c('34.052235', '40.792240', '41.881832', '40.002785', '32.736259', '39.790942', '47.608013', '30.471165', '35.040031', '39.299236', '29.761993', '33.753746', '38.889931', '33.792461', '38.627003')
+ztabela$Long<-c('-118.243683', '-73.138260', '-87.623177', '-75.183739', '-96.864586', '-86.147685', '-122.335167', '-91.147385', '-89.981873', '-76.609383', '-95.366302', '-84.386330', '-77.009003', '-118.185005', '-90.199402')
+ztabela$STATE_NAME<-c('California', 'New York', 'Illinois', 'Pennsylvania', 'Texas', 'Indiana', 'Washington', 'Louisiana', 'Tennessee', 'Maryland', 'Texas', 'Georgia', 'District of Columbia', 'California', 'Missouri')
+ztabela$Lat<-as.numeric(ztabela$Lat)
+ztabela$Long<-as.numeric(ztabela$Long)
+source("lib/uvozi.zemljevid.r", encoding = "UTF-8")
+library(ggplot2)
+
+pretvori.zemljevid <- function(zemljevid) {
+  fo <- fortify(zemljevid)
+  data <- zemljevid@data
+  data$id <- as.character(0:(nrow(data)-1))
+  return(inner_join(fo, data, by="id"))
+}
+
+zda <- uvozi.zemljevid("http://baza.fmf.uni-lj.si/states_21basic.zip", "states")
+ztabela <- preuredi(ztabela, zda, "STATE_NAME")
+usa<-pretvori.zemljevid(zda)
+
+
+
+  
