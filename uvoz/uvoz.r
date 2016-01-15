@@ -65,7 +65,8 @@ pretvori.zemljevid <- function(zemljevid) {
 zda <- uvozi.zemljevid("http://baza.fmf.uni-lj.si/states_21basic.zip", "states")
 ztabela <- preuredi(ztabela, zda, "STATE_NAME")
 usa<-pretvori.zemljevid(zda)
+usa.cont <- usa %>% filter(! STATE_NAME %in% c("Alaska", "Hawaii"))
+map1 <- ggplot() + geom_polygon(data = usa.cont, color='black', aes(x = long, y = lat, group=group)) + geom_point(data = ztabela, color = "green", aes(x = Long, y = Lat, size = Players)) + geom_text(data = ztabela, color='white', aes(x = Long, y = Lat, label = City), size=3)
 
 
 
-  
