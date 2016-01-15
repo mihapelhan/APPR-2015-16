@@ -66,7 +66,7 @@ zda <- uvozi.zemljevid("http://baza.fmf.uni-lj.si/states_21basic.zip", "states")
 ztabela <- preuredi(ztabela, zda, "STATE_NAME")
 usa<-pretvori.zemljevid(zda)
 usa.cont <- usa %>% filter(! STATE_NAME %in% c("Alaska", "Hawaii"))
-map1 <- ggplot() + geom_polygon(data = usa.cont, color='black', aes(x = long, y = lat, group=group)) + geom_point(data = ztabela, color = "green", aes(x = Long, y = Lat, size = Players)) + geom_text(data = ztabela, color='white', aes(x = Long, y = Lat, label = City), size=3)
+map1 <- ggplot() + geom_polygon(data = usa.cont, color='black', aes(x = long, y = lat, group=group)) + geom_point(data = ztabela, color = "green", aes(x = Long, y = Lat, size = Players)) + geom_text(data = ztabela, color='white', aes(x = Long, y = Lat, label = City), size=7,vjust=1)
 
 ekipe<-read.csv('teams__active.csv')
 ekipe$Lg<-NULL
@@ -79,5 +79,10 @@ ekipe<-ekipe[-28,]
 ekipe$STATE_NAME<-c('Georgia', 'Massachusetts', 'New York', 'North Carolina', 'Illinois', 'Ohio','Texas','Colorado','Michigan','California','Texas','Indiana','California','California','Tennessee','Florida','Wisconsin','Minnesota','Louisianna','New York','Oklahoma','Florida','Pennsylvania','Arizona','Oregon','California','Texas','Utah','District of Columbia')
 ekipe$LAT<-c('33.75375', '42.35843', '40.35000','35.227085', '41.881832','41.505493','32.73626','39.742043','42.331429','	37.801239','29.682720','39.769653','34.052235','34.052235','35.040031',	'25.778135','43.038902','44.986656','29.951065','40.79224','35.481918','28.538336','40.00279','33.453388','45.512794','38.575764','29.424349','40.758701','38.88993')
 ekipe$LONG<-c('-84.38633', '-71.05977', '-73.949997', '-80.843124','-87.623177','	-81.681290','-96.86459','	-104.991531','	-83.045753','-122.258301','-95.593239','-86.157143','-118.243683','-118.243683','-89.981873','-80.179100','-87.906471','-93.258133','-90.071533','-73.13826','-97.508469','-81.379234','-75.18374','-112.074623','-122.679565','-121.478851','-98.491142','-111.876183','-77.00900')
+ekipe$LAT<-as.numeric(ekipe$LAT)
+ekipe$LONG<-as.numeric(ekipe$LONG)
 ekipe<-preuredi(ekipe,zda,'STATE_NAME')
-map2<-map1+geom_point(data=ekipe,aes(x=LONG,y=LAT))# + geom_text(data=ekipe,color='cyan',aes(x=LONG,y=LAT,label=Team))
+require(ggrepel)
+map2<-map1+geom_point(data=ekipe,color='red',size=2,aes(x=LONG,y=LAT)) + geom_text_repel(data=ekipe,color='cyan',aes(x=LONG,y=LAT,label=Team),size=7)
+map2
+
