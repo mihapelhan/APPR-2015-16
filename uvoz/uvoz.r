@@ -5,8 +5,8 @@ require(gsubfn)
 
 url<-'https://en.wikipedia.org/wiki/2014%E2%80%9315_NBA_season'
 
-stran <- html_session(url) %>% read_html(encoding = "UTF-8")
-tabela <- stran %>% html_nodes(xpath ="//table[5]") %>% .[[1]] %>% html_table()
+#stran <- html_session(url) %>% read_html(encoding = "UTF-8")
+#tabela <- stran %>% html_nodes(xpath ="//table[5]") %>% .[[1]] %>% html_table()
 
 podatki<-read.csv("podatki.csv", header=TRUE, sep=",", dec=".", stringsAsFactors = FALSE, na.strings = ".")
 podatki$Rk<-NULL
@@ -66,7 +66,10 @@ zda <- uvozi.zemljevid("http://baza.fmf.uni-lj.si/states_21basic.zip", "states")
 ztabela <- preuredi(ztabela, zda, "STATE_NAME")
 usa<-pretvori.zemljevid(zda)
 usa.cont <- usa %>% filter(! STATE_NAME %in% c("Alaska", "Hawaii"))
-map1 <- ggplot() + geom_polygon(data = usa.cont, color='black', aes(x = long, y = lat, group=group)) + geom_point(data = ztabela, color = "green", aes(x = Long, y = Lat, size = Players)) + geom_text(data = ztabela, color='white', aes(x = Long, y = Lat, label = City), size=7,vjust=1)
+map <- ggplot() + geom_polygon(data = usa.cont, color='navajowhite3', aes(x = long, y = lat, group=group),fill="navajowhite")
+require(ggrepel)
+map1 <- map + geom_point(data = ztabela, color = "green4", aes(x = Long, y = Lat, size = Players)) + geom_text_repel(data = ztabela, color='black', aes(x = Long, y = Lat, label = City), size=5)
+map1
 
 ekipe<-read.csv('teams__active.csv')
 ekipe$Lg<-NULL
@@ -82,7 +85,7 @@ ekipe$LONG<-c('-84.38633', '-71.05977', '-73.949997', '-80.843124','-87.623177',
 ekipe$LAT<-as.numeric(ekipe$LAT)
 ekipe$LONG<-as.numeric(ekipe$LONG)
 ekipe<-preuredi(ekipe,zda,'STATE_NAME')
-require(ggrepel)
-map2<-map1+geom_point(data=ekipe,color='red',size=2,aes(x=LONG,y=LAT)) + geom_text_repel(data=ekipe,color='cyan',aes(x=LONG,y=LAT,label=Team),size=7)
+map2<-map+geom_point(data=ekipe,color='red',size=2,aes(x=LONG,y=LAT)) + geom_text_repel(data=ekipe,color='black',aes(x=LONG,y=LAT,label=Team),size=5)
 map2
 
+#graf1 <- ggplot(celatabela$Points, celatabela$Salary, main="Število točk glede na plačo", xlab="Točke", ylab="Plača")
