@@ -4,9 +4,8 @@ require(rvest)
 require(gsubfn)
 
 url<-'https://en.wikipedia.org/wiki/2014%E2%80%9315_NBA_season'
-
-#stran <- html_session(url) %>% read_html(encoding = "UTF-8")
-#tabela <- stran %>% html_nodes(xpath ="//table[5]") %>% .[[1]] %>% html_table()
+stran <- html_session(url) %>% read_html(encoding = "UTF-8")
+tabela <- stran %>% html_nodes(xpath ="//table[4]") %>% .[[1]] %>% html_table()
 
 podatki<-read.csv("podatki.csv", header=TRUE, sep=",", dec=".", stringsAsFactors = FALSE, na.strings = ".")
 podatki$Rk<-NULL
@@ -93,20 +92,23 @@ qplot(datagraf1$Points,datagraf1$Salary,color=datagraf1$Team,size=(datagraf1$Min
 
 dataSG <- celatabela[which(celatabela$Position=="SG"), ]
 dataSG1 <- dataSG[which(dataSG$Points > mean(dataSG$Points)), ]
-qplot(dataSG1$Points,dataSG1$Player,xlab = "Points",ylab = "Player") + geom_vline(xintercept = mean(dataSG1$Points), color="red")
+barplot(dataSG1$Points,xlab = "Points", horiz=TRUE, names.arg = dataSG1$Player, las=1,cex.names = 0.5)# + geom_vline(xintercept = mean(dataSG1$Points), color="red")
 
 dataC <- celatabela[which(celatabela$Position == "C"), ]
 dataC1 <- dataC[which(dataC$Points > mean(dataC$Points)), ]
-qplot(dataC1$Points,dataC1$Player,xlab = "Points",ylab = "Player") + geom_vline(xintercept = mean(dataC1$Points), color="red")
+barplot(dataC1$Points,xlab = "Points",horiz=TRUE, names.arg = dataC1$Player,las=1,cex.names=0.5)# + geom_vline(xintercept = mean(dataC1$Points), color="red")
 
 dataPG <- celatabela[which(celatabela$Position == "PG"), ]
 dataPG1 <- dataPG[which(dataPG$Points > mean(dataPG$Points)), ]
-qplot(dataPG1$Points,dataPG1$Player,xlab = "Points",ylab = "Player") + geom_vline(xintercept = mean(dataPG1$Points), color="red")
+barplot(dataPG1$Points,xlab = "Points",horiz=TRUE, names.arg = dataPG1$Player,las=1,cex.names=0.5)# + geom_vline(xintercept = mean(dataPG1$Points), color="red")
 
 dataSF <- celatabela[which(celatabela$Position=="SF"), ]
 dataSF1 <- dataSF[which(dataSF$Points > mean(dataSF$Points)), ]
-qplot(dataSF1$Points,dataSF1$Player,xlab = "Points",ylab = "Player") + geom_vline(xintercept = mean(dataSF1$Points), color="red")
+barplot(dataSF1$Points,xlab = "Points",horiz=TRUE, names.arg = dataSF1$Player,las=1,cex.names=0.5)# + geom_vline(xintercept = mean(dataSF1$Points), color="red")
 
 dataPF <- celatabela[which(celatabela$Position=="PF"), ]
 dataPF1 <- dataPF[which(dataPF$Points > mean(dataPF$Points)), ]
-qplot(dataPF1$Points,dataPF1$Player,xlab = "Points",ylab = "Player") + geom_vline(xintercept = mean(dataPF1$Points), color="red")
+barplot(dataPF1$Points,xlab = "Points",horiz=TRUE, names.arg = dataPF1$Player,las=1,cex.names=0.5)# + geom_vline(xintercept = mean(dataPF1$Points), color="red")
+
+#graf2 <- ggplot(dataPF1,aes(Player)) + geom_bar() + coord_flip()
+#graf2

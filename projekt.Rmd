@@ -6,6 +6,7 @@ output:
     includes:
       in_header: lib/styles.sty
   html_document: default
+  word_document: default
 ---
 
 ```{r setup, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
@@ -30,7 +31,7 @@ Kasneje bom dodal še zemljevid, na katerem bo prikazano, od kod prihajajo igral
 # Obdelava, uvoz in čiščenje podatkov
 
 ```{r uvoz, echo=FALSE,results='hide',message=FALSE}
-source("C:/Program Files/APPR-2015-16/uvoz/uvoz.r", encoding = "UTF-8")
+source("uvoz/uvoz.r", encoding = "UTF-8")
 ```
 
 V tej fazi sem uvozil podatke v obliki CSV (iz povezave 1), ter podatke v obliki HTML (iz povezav 2 in 3). V CSV datoteki sem dobil vse statistične podatke, k sem jih potreboval, iz povezave 2 pa sem dobil še podatke o plačah igralcev in tabeli združil. Tako da so zdaj vsi podatki, ki sem jih do sedaj potreboval zbrani v eni tabeli. V tej tabeli so vsi številčni podatki v stolpcih oblike numeric, ostali so oblike character. Spremenljivk je vseh skupaj 29, vrstic pa 473, saj je igralcev v ligi zelo veliko.
