@@ -30,7 +30,7 @@ Kasneje bom dodal še zemljevid, na katerem bo prikazano, od kod prihajajo igral
 
 # Obdelava, uvoz in čiščenje podatkov
 
-```{r uvoz, echo=FALSE,results='hide',message=FALSE}
+```{r uvoz, echo=FALSE,results='hide',message=FALSE,warning=FALSE}
 source("uvoz/uvoz.r", encoding = "UTF-8")
 ```
 
@@ -52,4 +52,51 @@ Ter še nekaj igralcev, ki so bili najbolje plačani:
 
 ```{r,echo=FALSE,message=FALSE}
 kable(head(place))
+```
+
+# Vizualizacija
+```{r vizualizacija, echo=FALSE,results='hide',message=FALSE,warning=FALSE,fig.keep='none'}
+source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
+```
+
+Za začetek vizualizacije sem iz spleta pridobil tabelo z Severnoameriškimi mesti, ki so prispevala največ igralcev. Osredotočil sem se na Ameriška mesta, saj je bilo edino mesto izven ZDA Toronto, ki pa je predstavljal veliko nevšečnost pri risanju zemljevida, saj bi bil le-ta prevelik. Nato sem tabeli dodal še koordinate mest in mesta predstavil na zemljevidu.
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+map1
+```
+
+Torej, prvi zemljevid predstavlja 15 mest iz ZDA, v katerih je bilo rojenih največ igralcev v ligi NBA. Večji kot je krogec ob določenem mestu, več igralcev je bilo tam rojenih.
+
+Na naslednjam zemljevidu pa so predstavljena mesta, v katerih imajo določeni klubi sedeže.
+
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+map2
+```
+
+Iz primerjave obeh grafov je lepo razvidno, da največ igralcev izhaja iz mest, v katerih se nahajajo tudi klubi. To je sicer logično, saj gre za največja mesta državi, kljub temu pa pride do nekaj izjem. Naprimer Seattle in Baton Rouge, ki "pridelata" veliko igralcev, nimata svojih klubov (Seattle ga je sicer imel do l. 2008, a se je franšiza preselila v Oklahomo). Na drugi strani pa imamo naprimer Oakland, iz katerega izhajajo kasnejši zmagovalci lige, iz katerega izhaja malo igralcev.
+
+# Napredna analiza
+
+Pri napredni analizi sem se odločil, da bom igrazce razvrstil po igralnih položajih in jih nato primerjal med sabo. To sem naredil tako, da sem iz glavne tabele pobral igralce, ki igrajo na enakih položajih. Teh položajev je 5, torej bo tu sledilo 5 razdelkov.
+
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+barplot(dataSG1$Points,xlab = "Points", horiz=TRUE, names.arg = dataSG1$Player, las=1,cex.names = 0.5, main = "Branilci")
+```
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+barplot(dataC1$Points,xlab = "Points",horiz=TRUE, names.arg = dataC1$Player,las=1,cex.names=0.5, main= "Centri")
+```
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+barplot(dataPG1$Points,xlab = "Points",horiz=TRUE, names.arg = dataPG1$Player,las=1,cex.names=0.5, main = "Organizatorji")
+```
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+barplot(dataSF1$Points,xlab = "Points",horiz=TRUE, names.arg = dataSF1$Player,las=1,cex.names=0.5, main="Krila")
+```
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+barplot(dataPF1$Points,xlab = "Points",horiz=TRUE, names.arg = dataPF1$Player,las=1,cex.names=0.5, main="Krilni centri")
 ```

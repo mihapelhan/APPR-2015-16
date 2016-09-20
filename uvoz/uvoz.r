@@ -65,10 +65,6 @@ zda <- uvozi.zemljevid("http://baza.fmf.uni-lj.si/states_21basic.zip", "states")
 ztabela <- preuredi(ztabela, zda, "STATE_NAME")
 usa<-pretvori.zemljevid(zda)
 usa.cont <- usa %>% filter(! STATE_NAME %in% c("Alaska", "Hawaii"))
-map <- ggplot() + geom_polygon(data = usa.cont, color='navajowhite3', aes(x = long, y = lat, group=group),fill="navajowhite")
-require(ggrepel)
-map1 <- map + geom_point(data = ztabela, color = "green4", aes(x = Long, y = Lat, size = Players)) + geom_text_repel(data = ztabela, color='black', aes(x = Long, y = Lat, label = City), size=5)
-map1
 
 ekipe<-read.csv('teams__active.csv')
 ekipe$Lg<-NULL
@@ -84,31 +80,3 @@ ekipe$LONG<-c('-84.38633', '-71.05977', '-73.949997', '-80.843124','-87.623177',
 ekipe$LAT<-as.numeric(ekipe$LAT)
 ekipe$LONG<-as.numeric(ekipe$LONG)
 ekipe<-preuredi(ekipe,zda,'STATE_NAME')
-map2<-map+geom_point(data=ekipe,color='red',size=2,aes(x=LONG,y=LAT)) + geom_text_repel(data=ekipe,color='black',aes(x=LONG,y=LAT,label=Team),size=5)
-map2
-
-datagraf1 <- celatabela[which(celatabela$Points > 1500), ]
-qplot(datagraf1$Points,datagraf1$Salary,color=datagraf1$Team,size=(datagraf1$Minutes),xlab = "Points",ylab = "Salary",main = "Points achieved per dollar") + geom_text_repel(aes(label=datagraf1$Player),size=5, color="black")
-
-dataSG <- celatabela[which(celatabela$Position=="SG"), ]
-dataSG1 <- dataSG[which(dataSG$Points > mean(dataSG$Points)), ]
-barplot(dataSG1$Points,xlab = "Points", horiz=TRUE, names.arg = dataSG1$Player, las=1,cex.names = 0.5)# + geom_vline(xintercept = mean(dataSG1$Points), color="red")
-
-dataC <- celatabela[which(celatabela$Position == "C"), ]
-dataC1 <- dataC[which(dataC$Points > mean(dataC$Points)), ]
-barplot(dataC1$Points,xlab = "Points",horiz=TRUE, names.arg = dataC1$Player,las=1,cex.names=0.5)# + geom_vline(xintercept = mean(dataC1$Points), color="red")
-
-dataPG <- celatabela[which(celatabela$Position == "PG"), ]
-dataPG1 <- dataPG[which(dataPG$Points > mean(dataPG$Points)), ]
-barplot(dataPG1$Points,xlab = "Points",horiz=TRUE, names.arg = dataPG1$Player,las=1,cex.names=0.5)# + geom_vline(xintercept = mean(dataPG1$Points), color="red")
-
-dataSF <- celatabela[which(celatabela$Position=="SF"), ]
-dataSF1 <- dataSF[which(dataSF$Points > mean(dataSF$Points)), ]
-barplot(dataSF1$Points,xlab = "Points",horiz=TRUE, names.arg = dataSF1$Player,las=1,cex.names=0.5)# + geom_vline(xintercept = mean(dataSF1$Points), color="red")
-
-dataPF <- celatabela[which(celatabela$Position=="PF"), ]
-dataPF1 <- dataPF[which(dataPF$Points > mean(dataPF$Points)), ]
-barplot(dataPF1$Points,xlab = "Points",horiz=TRUE, names.arg = dataPF1$Player,las=1,cex.names=0.5)# + geom_vline(xintercept = mean(dataPF1$Points), color="red")
-
-#graf2 <- ggplot(dataPF1,aes(Player)) + geom_bar() + coord_flip()
-#graf2
