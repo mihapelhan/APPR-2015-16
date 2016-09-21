@@ -80,3 +80,14 @@ ekipe$LONG<-c('-84.38633', '-71.05977', '-73.949997', '-80.843124','-87.623177',
 ekipe$LAT<-as.numeric(ekipe$LAT)
 ekipe$LONG<-as.numeric(ekipe$LONG)
 ekipe<-preuredi(ekipe,zda,'STATE_NAME')
+
+grobijani <- data.frame("Player"=celatabela$Player,"Minutes"=celatabela$Minutes,"Fouls"=celatabela$Fouls,"Position"=celatabela$Position,"Points"=celatabela$Points)
+grobijani1 <- grobijani[which(grobijani$Minutes>2000 & grobijani$Fouls>200), ]
+grobijani1 <- grobijani1[with(grobijani1, order(-Fouls)), ]
+grobijani2 <- data.frame("Igralec"=grobijani1$Player,"Minute"=grobijani1$Minutes,"Prekrški"=grobijani1$Fouls)
+
+#SG = mean(dataSG$Points)
+#C = mean(dataC$Points)
+#PG = mean(dataPG$Points)
+#SF = mean(dataSF$Points)
+#PF = mean(dataPF$Points)

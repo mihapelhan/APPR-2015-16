@@ -21,9 +21,10 @@ source("lib/libraries.r", encoding = "UTF-8")
 # Izbira teme
 
 Za temo mojega projekta sem si izbral analizo igralcev lige NBA v sezoni 2014-15. Analiziral bom vse statistične prvine košarke, na podlagi podatkov, ki jih bom pridobil iz:
-1. http://www.basketball-reference.com/leagues/NBA_2015_totals.html?lid=header_seasons
-2. http://www.spotrac.com/widget/sport/nba/current-year/rankings-cap/
-3. https://en.wikipedia.org/wiki/2014%E2%80%9315_NBA_season
+
+* povezava 1: http://www.basketball-reference.com/leagues/NBA_2015_totals.html?lid=header_seasons
+* povezava 2: http://www.spotrac.com/widget/sport/nba/current-year/rankings-cap/
+* povezava 3: https://en.wikipedia.org/wiki/2014%E2%80%9315_NBA_season
 
 Kasneje bom dodal še zemljevid, na katerem bo prikazano, od kod prihajajo igralci iz lige.
 
@@ -34,7 +35,14 @@ Kasneje bom dodal še zemljevid, na katerem bo prikazano, od kod prihajajo igral
 source("uvoz/uvoz.r", encoding = "UTF-8")
 ```
 
-V tej fazi sem uvozil podatke v obliki CSV (iz povezave 1), ter podatke v obliki HTML (iz povezav 2 in 3). V CSV datoteki sem dobil vse statistične podatke, k sem jih potreboval, iz povezave 2 pa sem dobil še podatke o plačah igralcev in tabeli združil. Tako da so zdaj vsi podatki, ki sem jih do sedaj potreboval zbrani v eni tabeli. V tej tabeli so vsi številčni podatki v stolpcih oblike numeric, ostali so oblike character. Spremenljivk je vseh skupaj 29, vrstic pa 473, saj je igralcev v ligi zelo veliko.
+V tej fazi sem uvozil podatke v obliki CSV (iz povezave 1), ter podatke v obliki HTML (iz povezav 2 in 3). V CSV datoteki sem dobil vse statistične podatke, k sem jih potreboval, iz povezave 2 pa sem dobil še podatke o plačah igralcev in tabeli združil. Tako da so zdaj vsi podatki, ki sem jih do sedaj potreboval zbrani v eni tabeli.
+
+* tabela: v poročilu bo predstavljena kot prva, v njej pa so vsi stolpci tipa character
+* celatabela: sestavljena je iz tabel podatki (pridobljena v obliki CSV) ter salaries (pridobljena v obliki HTML). Spremenljivk je vseh skupaj 29, vrstic pa 473, saj je igralcev v ligi zelo veliko. V njej so stolpci oblike:
+    + character: Player, Position, Age, Team
+    + numeric: vsi ostali
+* ztabela: tabela s podatki za zemljevide, vklučno s koordinatami
+* vse ostale tabele: pridobljene iz tabele celatabela. Torej so tipi stolpcev v njih enaki kot v največji tabeli.
 
 Na spletu sem našel tabelo z igralci, ki so bili najboljši v posamezni kategoriji:
 
@@ -54,6 +62,8 @@ Ter še nekaj igralcev, ki so bili najbolje plačani:
 kable(head(place))
 ```
 
+\pagebreak
+
 # Vizualizacija
 ```{r vizualizacija, echo=FALSE,results='hide',message=FALSE,warning=FALSE,fig.keep='none'}
 source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
@@ -66,37 +76,92 @@ map1
 ```
 
 Torej, prvi zemljevid predstavlja 15 mest iz ZDA, v katerih je bilo rojenih največ igralcev v ligi NBA. Večji kot je krogec ob določenem mestu, več igralcev je bilo tam rojenih.
+Opazimo lahko, da občutno več igralcev prihaja iz vzhoda ZDA.
 
-Na naslednjam zemljevidu pa so predstavljena mesta, v katerih imajo določeni klubi sedeže.
+Na naslednjem zemljevidu pa so predstavljena mesta, v katerih imajo določeni klubi sedeže.
 
 
 ```{r,echo=FALSE,message=FALSE,warning=FALSE}
 map2
 ```
 
-Iz primerjave obeh grafov je lepo razvidno, da največ igralcev izhaja iz mest, v katerih se nahajajo tudi klubi. To je sicer logično, saj gre za največja mesta državi, kljub temu pa pride do nekaj izjem. Naprimer Seattle in Baton Rouge, ki "pridelata" veliko igralcev, nimata svojih klubov (Seattle ga je sicer imel do l. 2008, a se je franšiza preselila v Oklahomo). Na drugi strani pa imamo naprimer Oakland, iz katerega izhajajo kasnejši zmagovalci lige, iz katerega izhaja malo igralcev.
+Iz primerjave obeh grafov je lepo razvidno, da največ igralcev izhaja iz mest, v katerih se nahajajo tudi klubi. To je sicer logično, saj gre za največja mesta državi, kljub temu pa pride do nekaj izjem. Naprimer Seattle in Baton Rouge, ki "pridelata" veliko igralcev, nimata svojih klubov (Seattle ga je sicer imel do l. 2008, a se je franšiza preselila v Oklahomo). Na drugi strani pa imamo naprimer Oakland, v katerem se nahajajo kasnejši zmagovalci lige, iz njega pa izhaja malo igralcev.
+
+\pagebreak
 
 # Napredna analiza
 
-Pri napredni analizi sem se odločil, da bom igrazce razvrstil po igralnih položajih in jih nato primerjal med sabo. To sem naredil tako, da sem iz glavne tabele pobral igralce, ki igrajo na enakih položajih. Teh položajev je 5, torej bo tu sledilo 5 razdelkov.
+Pri napredni analizi sem se odločil, da bom igrazce razvrstil po igralnih položajih in jih nato primerjal med sabo. To sem naredil tako, da sem iz glavne tabele pobral igralce, ki igrajo na enakih položajih. Teh položajev je 5, torej bo tu sledilo 5 razdelkov. Naprej sem igralce izluščil tako, da sem za vsak položaj posebaj vzel samo tiste, ki so bili na svojem položaju po številu doseženih točk nad povprečjem.
 
 
 ```{r,echo=FALSE,message=FALSE,warning=FALSE}
 barplot(dataSG1$Points,xlab = "Points", horiz=TRUE, names.arg = dataSG1$Player, las=1,cex.names = 0.5, main = "Branilci")
 ```
 
+Prvi položaj so branilci, pri katerih je očitno, da James Harden precej izstopa. Gre sicer za tudi na splošno najboljšega strelca lige. V tem razdelku lahko najdemo tudi našega Gorana Dragiča, ki je edini Slovenec, katerega sem obravnaval v tem poglavju.
+Povprečje vseh branilcev v ligi je bilo 531.94
+
+```{r,echo=FALSE,message=FALSE}
+kable(head(dataSG2))
+```
+
 ```{r,echo=FALSE,message=FALSE,warning=FALSE}
 barplot(dataC1$Points,xlab = "Points",horiz=TRUE, names.arg = dataC1$Player,las=1,cex.names=0.5, main= "Centri")
+```
+
+Pri centrih, v nasprotju z branilci, lahko ugotovimo, da nihče ne izstopa tako, kot v prvem razdelku Harden. Zelo blizu so si Črnogorec Nikola Vučević, Američan DeMarcus Cousins in Španec Marc Gasol.
+Povprečje vseh centrov v ligi je bilo 519.46
+
+```{r,echo=FALSE,message=FALSE}
+kable(head(dataC2))
 ```
 
 ```{r,echo=FALSE,message=FALSE,warning=FALSE}
 barplot(dataPG1$Points,xlab = "Points",horiz=TRUE, names.arg = dataPG1$Player,las=1,cex.names=0.5, main = "Organizatorji")
 ```
 
+Tudi pri organizatorjih lahko opazimo, da noben igralec posebej ne izstopa. Sta pa od ostalih nekoliko boljša Američana Stephen Curry (tudi kasnejši MVP lige) in Russel Westbrook.
+Povprečje vseh ogranizatorjev v ligi je bilo 583.53
+
+```{r,echo=FALSE,message=FALSE}
+kable(head(dataPG2))
+```
+
 ```{r,echo=FALSE,message=FALSE,warning=FALSE}
 barplot(dataSF1$Points,xlab = "Points",horiz=TRUE, names.arg = dataSF1$Player,las=1,cex.names=0.5, main="Krila")
+```
+
+Pri krilih pa se ponovno pojavi igralec, ki od ostalih precej izstopa. To pa tu nikakor ni čudno, saj gre za Lebrona Jamesa, edinega resnega konkurenta Stephenu Curryju za naslov MVP. Tu recimo med drugimi najdemo tudi najboljšega mladega košarkarja lige Kawhija Leonarda.
+Povprečje vseh kril v ligi je bilo 537.61
+
+```{r,echo=FALSE,message=FALSE}
+kable(head(dataSF2))
 ```
 
 ```{r,echo=FALSE,message=FALSE,warning=FALSE}
 barplot(dataPF1$Points,xlab = "Points",horiz=TRUE, names.arg = dataPF1$Player,las=1,cex.names=0.5, main="Krilni centri")
 ```
+
+Kot zadni položaj pa sem si pogledal krilne centre. Tudi tu opazimo, da izstopata dva igralca, in sicer Američana LaMarcus Aldridge in Anthony Davis. tu med najbolšimi najdemo naprimer tudi Paua Gasola, starejšega brata prej omenjenega Marca Gasola.
+Povprečje vseh krilnih centrov v ligi je bilo 507.67
+
+```{r,echo=FALSE,message=FALSE}
+kable(head(dataPF2))
+```
+
+Če primerjamo povprečja vseh položajev, lahko opazimo, da precej izstopajo organizatorji, precej bolj skupaj pa so krila, branilci in centri. Najmanj točk v povprečju pa dosežejo zadnje obravnavani krilni centri.
+
+\pagebreak
+
+Kot zadnje pa sem si želel pogledati "najbolj grobe" igralce v ligi. Za obravnavo sem vzel le igralce, ki so odigrali vsaj 2000 minut v sezoni, ter pri tem storili vsaj 200 prekrškov.
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+plot(grobi)
+```
+
+Kot se na grafu lepo vidi, je daleč največ prekrškov storil Andre Drummond (kar 285), naprimer njegov najbližji zasledovalec Giannis Antetokounpo pa 31 manj (tabela).
+
+```{r,echo=FALSE,message=FALSE}
+kable(head(grobijani2))
+```
+
